@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Assignment Calculator</title>
+</head>
+<body>
+    <h1>Room Assignment Calculator</h1>
+    <label for="students">Number of Students (Breakout Rooms):</label>
+    <input type="number" id="students" min="1" required><br><br>
+    <label for="tutors">Number of Tutors:</label>
+    <input type="number" id="tutors" min="1" required><br><br>
+    <button onclick="calculateAssignments()">Calculate Assignments</button><br><br>
+    <div id="assignmentResult"></div>
+
+    <script>
+        function assignRooms(students, tutors) {
+            let roomsPerTutor = Math.floor(students / tutors);
+            let leftoverRooms = students % tutors;
+
+            let assignments = [];
+            let currRoom = 1;
+            for (let i = 0; i < tutors; i++) {
+                assignments.push([]);
+                for (let j = 0; j < roomsPerTutor; j++) {
+                    assignments[i].push(currRoom);
+                    currRoom++;
+                }
+                if (leftoverRooms > 0) {
+                    assignments[i].push(currRoom);
+                    currRoom++;
+                    leftoverRooms--;
+                }
+            }
+            return assignments;
+        }
+
+        function calculateAssignments() {
+            let students = parseInt(document.getElementById('students').value);
+            let tutors = parseInt(document.getElementById('tutors').value);
+            let assignments = assignRooms(students, tutors);
+            let resultDiv = document.getElementById('assignmentResult');
+            resultDiv.innerHTML = "<h3>The room ranges are:</h3>";
+            assignments.forEach((assignment, index) => {
+                let rangeStr = assignment.length > 0 ? `${assignment[0]}-${assignment[assignment.length - 1]}` : "[no students]";
+                resultDiv.innerHTML += `<p>Tutor ${index + 1}: ${rangeStr}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
