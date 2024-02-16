@@ -44,7 +44,7 @@
             resultDiv.innerHTML = "<h3>The room ranges are:</h3>";
             assignments.forEach((assignment, index) => {
                 let rangeStr = assignment.length > 0 ? `${assignment[0]}-${assignment[assignment.length - 1]}` : "[no students]";
-                resultDiv.innerHTML += `<p>Tutor ${index + 1}: ${rangeStr}</p>`;
+                resultDiv.innerHTML += `<p>Tutor${index + 1}: ${rangeStr}</p>`;
             });
         }
     </script>
